@@ -15,8 +15,7 @@
       "/" != window.location.href.slice(-1) &&
       window.location.replace(window.location.href + "/");
   </script>
-  <link href="https://fonts.googleapis.com/css2?
-family=Raleway:Poppins:wght@400;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:Poppins:wght@400;700&amp;display=swap" rel="stylesheet" />
   <title>Ricardo Gómez's Digital Business Card</title>
   <style>
     #body {
@@ -184,7 +183,13 @@ family=Raleway:Poppins:wght@400;700&amp;display=swap" rel="stylesheet" />
       <h3>Scan the QR Code</h3>
       <p>to view my Business Card on another device</p>
     </div>
+    <div id="wechatQRView" class="textColor">
+      <img src="./wechat_qr.jpg" alt="WeChat QR Code" style="width: 200px; height: 200px; margin-bottom: 1rem;" />
+      <h3>Escanea el Código QR de WeChat</h3>
+      <p>Agrega mi contacto en WeChat</p>
+    </div>
   </div>
+
   <header>
     <div id="topActions" style="display: none">
       <div>
@@ -325,8 +330,10 @@ family=Raleway:Poppins:wght@400;700&amp;display=swap" rel="stylesheet" />
         </div>
       </div>
       <div class="actionsC">
-        <div class="actionBtn"><a href="weixin://dl/chat?RicardoJavierGomez" target="_blank" rel="noopener noreferrer"
-            aria-label="WeChat" style="background-color: #fff;">
+        <div class="actionBtn">
+          <!-- <a href="weixin://dl/chat?RicardoJavierGomez" target="_blank" rel="noopener noreferrer"
+            aria-label="WeChat" style="background-color: #fff;"> -->
+          <a id="showQRWeChat" aria-label="WeChat" style="background-color: #fff; cursor: pointer;">
             <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
                 style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
                 <path style="fill:none" d="M0 0h24v24H0z"></path>
@@ -341,7 +348,8 @@ family=Raleway:Poppins:wght@400;700&amp;display=swap" rel="stylesheet" />
                 <circle cx="131" cy="36" r="1" style="fill:#fff" transform="translate(-118 -29)"></circle>
                 <circle cx="131" cy="36" r="1" style="fill:#fff" transform="translate(-117 -22)"></circle>
                 <circle cx="131" cy="36" r="1" style="fill:#fff" transform="translate(-113 -22)"></circle>
-              </svg></div>
+              </svg>
+            </div>
           </a>
           <!-- <p class="textColor">
             WeChat
@@ -589,10 +597,13 @@ family=Raleway:Poppins:wght@400;700&amp;display=swap" rel="stylesheet" />
       curl = document.getElementById("copyURL"),
       qrv = document.getElementById("qrView"),
       qr = document.getElementById("qr"),
+      wechatQRViewDiv = document.getElementById("wechatQRView"),
+      showQRWeChatBtn = document.getElementById("showQRWeChat"),
       s = document.getElementById("share"),
       sqr = document.getElementById("showQR"),
       sk = document.getElementById("showKey");
-    function tC(e) {
+
+      function tC(e) {
       "2rem" == e.style.top
         ? ((e.style.visibility = "visible"),
           (e.style.top = "0px"),
@@ -604,8 +615,10 @@ family=Raleway:Poppins:wght@400;700&amp;display=swap" rel="stylesheet" />
           }, 200));
     }
     function dN(e) {
+      console.log(e)
       e.style.display = "none";
     }
+
     window.addEventListener("load", () => {
       (document.querySelector("#topActions").style.display = "flex"),
         (qr.innerHTML = new QRCode({
@@ -625,14 +638,17 @@ family=Raleway:Poppins:wght@400;700&amp;display=swap" rel="stylesheet" />
           });
         })
         : s.addEventListener("click", () => {
-          tC(m), (cv.style.display = "flex"), dN(qrv), ki && dN(ki);
+          tC(m), (cv.style.display = "flex"), dN(qrv), ki && dN(ki), dN(wechatQRView);
         }),
-      sqr.addEventListener("click", () => {
-        tC(m), (qrv.style.display = "block"), dN(cv), ki && dN(ki);
-      }),
+        sqr.addEventListener("click", () => {
+          tC(m), (qrv.style.display = "block"), dN(cv), ki && dN(ki), wechatQRView && dN(wechatQRView);
+        }),
+        showQRWeChatBtn.addEventListener("click", () => {
+          tC(m), (wechatQRViewDiv.style.display = "flex"), dN(qrv), ki && dN(ki), dN(cv);
+        }),
       sk &&
       sk.addEventListener("click", () => {
-        tC(m), ki && (ki.style.display = "flex"), dN(cv), dN(qrv);
+        tC(m), ki && (ki.style.display = "flex"), dN(cv), dN(qrv), dN(wechatQRView);
       }),
       c.addEventListener("click", () => tC(m)),
       curl.addEventListener("click", async () => {
